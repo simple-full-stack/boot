@@ -1,0 +1,25 @@
+{
+    "name": "client",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@types/jest": "^21.1.1",
+        "@types/react": "^16.0.7",
+        "@types/react-dom": "^15.5.5",
+        "react": "^16.0.0",
+        "react-dom": "^16.0.0",
+        "sfs-react-scripts": "1.0.14"
+    },
+    "scripts": {
+        "start": "sfs-react-scripts start",
+        "build": "sfs-react-scripts build",
+        "test": "sfs-react-scripts test --env=jsdom",
+        "eject": "sfs-react-scripts eject"
+    },
+    "proxy": "http://localhost:4000",
+    "devDependencies": {
+        "awesome-typescript-loader": "^3.2.3",
+        "source-map-loader": "^0.2.1",
+        "typescript": "^2.5.3"
+    }
+}
