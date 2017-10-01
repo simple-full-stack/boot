@@ -1,0 +1,23 @@
+{
+    "presets": [
+        ["env", {
+            "modules": false,
+            "targets": {
+                "browsers": [
+                    ">1%",
+                    "last 4 versions",
+                    "Firefox ESR",
+                    "not ie < 9"
+                ]
+            },
+            "useBuiltIns": true,
+            "debug": true
+        }],
+        "stage-2"
+    ],
+    "plugins": [
+        "transform-regenerator",
+        "transform-react-jsx",
+        ["import", { "libraryName": "antd", "style": true }]
+    ]
+}

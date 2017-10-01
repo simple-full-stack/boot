@@ -56,7 +56,9 @@
     "webpack": "3.5.1",
     "webpack-dev-server": "2.8.2",
     "webpack-manifest-plugin": "1.2.1",
-    "whatwg-fetch": "2.0.3"
+    "whatwg-fetch": "2.0.3",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.5"
   },
   "devDependencies": {
     "react": "^15.5.4",

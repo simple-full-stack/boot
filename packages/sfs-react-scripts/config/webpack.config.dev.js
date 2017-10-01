@@ -106,6 +106,7 @@ module.exports = {
             // Support React Native Web
             // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
             'react-native': 'react-native-web',
+            // 'antd': 'antd/lib',
         },
         plugins: [
             // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -157,8 +158,18 @@ module.exports = {
                     }
                  }
             },
-            { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
             { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
+            {
+                test: /\.tsx?$/,
+                use: [
+                    {
+                        loader: "babel-loader"
+                    },
+                    {
+                        loader: "awesome-typescript-loader"
+                    }
+                ]
+            },
             {
                 // "oneOf" will traverse all following loaders until one will
                 // match the requirements. When no loader matches it will fall
@@ -197,7 +208,7 @@ module.exports = {
                     // In production, we use a plugin to extract that CSS to a file, but
                     // in development "style" loader enables hot editing of CSS.
                     {
-                        test: /\.css$/,
+                        test: /\.less$/,
                         use: [
                             require.resolve('style-loader'),
                             {
@@ -226,6 +237,7 @@ module.exports = {
                                     ],
                                 },
                             },
+                            require.resolve('less-loader'),
                         ],
                     },
                     // "file" loader makes sure those assets get served by WebpackDevServer.
@@ -238,7 +250,7 @@ module.exports = {
                         // it's runtime that would otherwise processed through "file" loader.
                         // Also exclude `html` and `json` extensions so they get processed
                         // by webpacks internal loaders.
-                        exclude: [/\.js$/, /\.tsx?$/, /\.html$/, /\.json$/],
+                        exclude: [/\.js$/, /\.tsx?$/, /\.html$/, /\.json$/, /\.less$/],
                         loader: require.resolve('file-loader'),
                         options: {
                             name: 'static/media/[name].[hash:8].[ext]',

@@ -1,6 +1,6 @@
+import 'regenerator-runtime/runtime';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import './store/api';
 

@@ -71,8 +71,6 @@ each(apiConfig, (description, path) => {
 
 requesters.controller.apis({ age: 'zhangsan' }, 'lisi').then(result => {
     console.log(result);
-}).catch(response => {
-    debugger;
 });
 
 export default requesters;
