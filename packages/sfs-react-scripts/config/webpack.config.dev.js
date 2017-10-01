@@ -147,6 +147,16 @@ module.exports = {
             //     ],
             //     include: paths.appSrc,
             // },
+            {
+                test: /\.tsx?$/,
+                enforce: 'pre',
+                loader: 'tslint-loader',
+                options: {
+                    configuration: {
+                        "extends": "tslint-config-standard"
+                    }
+                 }
+            },
             { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
             { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
             {
