@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-interface FieldError {
+export interface FieldError {
     dataPath: string;
     message: string;
 }
@@ -14,7 +14,7 @@ export default class HTTPContext {
         this.res = res;
     }
 
-    fieldsError(errors: FieldError) {
+    fieldsError(errors: FieldError[]) {
         this.res.status(400).json({ fields: errors });
     }
 

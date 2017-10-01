@@ -5,6 +5,9 @@ import Controller from './controllers/Controller';
 import { each } from 'lodash';
 import * as bodyParser from 'body-parser';
 import { waitUntilFree } from 'tcp-port-used';
+import 'reflect-metadata';
+import servicesInit from './services/init';
+import * as winston from 'winston';
 
 const kill = require('kill-process-by-port');
 
@@ -32,18 +35,20 @@ async function start(port: number) {
     try {
         await waitUntilFree(port, 500, 3000);
         app.listen(4000, function (...args) {
-            console.log(`listening on port ${port}!`);
+            winston.info(`listening on port ${port}!`);
         });
     } catch (err) {
         try {
-            console.log(`try to kill processes on port ${port}`);
+            winston.info(`try to kill processes on port ${port}`);
             const pids = await kill(port);
-            console.log(`killed processes(${pids.join(',')}) on port ${port} successfully`);
+            winston.info(`killed processes(${pids.join(',')}) on port ${port} successfully`);
             start(port);
         } catch (err) {
-            console.error(`kill processes on port ${port} failed`, err);
+            winston.error(`kill processes on port ${port} failed`, err);
         }
     }
 }
 
-start(4000);
+servicesInit()
+    .then(() => start(4000))
+    .catch(error => winston.error(error));

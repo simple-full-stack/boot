@@ -1,7 +1,7 @@
 import { assign, camelCase } from 'lodash';
 import * as express from 'express';
 import * as Ajv from 'ajv';
-import HTTPContext from './HTTPContext';
+import HTTPContext, { FieldError } from './HTTPContext';
 
 interface APIDescription {
     method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTION';
@@ -71,7 +71,8 @@ export function api(description: APIDescription) {
                     const context = new HTTPContext(req, res);
                     const valid = validator(args);
                     if (!valid) {
-                        context.fieldsError(validator.errors);
+                        const errors: FieldError[] = validator.errors.map(({dataPath, message}) => ({dataPath, message}));
+                        context.fieldsError(errors);
                     } else {
                         target[propertyKey](...args, context);
                     }
