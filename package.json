@@ -5,6 +5,6 @@
     },
     "scripts": {
         "client": "cd packages/client && npm run start",
-        "dev": "concurrently \"cd packages/server && npm run server\" \"cd packages/client && npm run start\""
+        "dev": "concurrently \"cd packages/sfs-server && npm run server\" \"cd packages/sfs-client && npm run start\""
     }
 }

@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "strictNullChecks": true,
+        "noUnusedParameters": true,
+        "noUnusedLocals": true,
+        "diagnostics": true,
+        "forceConsistentCasingInFileNames": true,
+        "newLine": "LF",
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "preserveSymlinks": true,
+        "pretty": true,
+        "strict": true,
+        "traceResolution": true,
+        "version": true,
+        "experimentalDecorators": true
+    }
+}
