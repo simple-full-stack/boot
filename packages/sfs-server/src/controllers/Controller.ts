@@ -76,7 +76,7 @@ export function api(description: APIDescription) {
                     if (!valid) {
                         ajvLocalize.zh(validator.errors);
                         const errors: IFieldError[] = ((validator.errors || []) as IFieldError[])
-                            .map(({dataPath, message}) => ({dataPath, message}));
+                            .map(({ dataPath, message }) => ({ dataPath, message }));
                         context.fieldsError(errors);
                     } else {
                         (get(target, propertyKey) as Function)(...args, context);

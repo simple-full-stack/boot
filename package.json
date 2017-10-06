@@ -5,6 +5,7 @@
     },
     "scripts": {
         "client": "cd packages/client && npm run start",
-        "dev": "concurrently \"cd packages/sfs-server && npm run server\" \"cd packages/sfs-client && npm run start\""
+        "dev": "concurrently \"cd packages/sfs-server && npm run server\" \"cd packages/sfs-client && npm run start\"",
+        "native": "concurrently \"cd packages/native && npm run start\" \"cd packages/native && npm run ios\" \"cd packages/native && npm run android\""
     }
 }
