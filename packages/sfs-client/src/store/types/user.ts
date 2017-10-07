@@ -1,5 +1,5 @@
 import IUser from 'sfs-common/types/IUser';
-import { IFormFieldsErrors } from '../../types/IFormChangedDescription';
+import IFormFieldsErrors from 'sfs-common/types/IFormFieldsErrors';
 
 export interface IRegisterAction {
     type: 'user/register',

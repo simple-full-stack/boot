@@ -13,6 +13,7 @@
     "@types/react": "^16.0.9",
     "@types/react-dom": "^16.0.0",
     "@types/react-redux": "^5.0.10",
+    "sfs-common": "^1.0.0",
     "antd-mobile": "^1.6.11",
     "dva-no-router": "^1.0.2",
     "lodash": "^4.17.4",

@@ -1,5 +1,3 @@
-import { AxiosPromise } from 'react-native-axios';
-
 export const API_KEY: string = '__api__';
 
 export interface IWindow {
@@ -16,7 +14,7 @@ export interface IAPIConfig {
 }
 
 export interface IRequester {
-    [fnName: string]: (...args: Array<any>) => AxiosPromise;
+    [fnName: string]: (...args: Array<any>) => Promise<any>;
 }
 
 export interface IRequesters {

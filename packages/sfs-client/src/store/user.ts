@@ -1,35 +1,12 @@
 import api from './api';
-import IResponseData, { ResponseFieldsErrors } from '../types/IResponseData';
 import { assign, set } from 'lodash';
-import IFormChangedDescription, { IError } from '../types/IFormChangedDescription';
-import { IRegisterAction, IUserState } from './types/user';
-import { IFormFieldsErrors } from '../types/IFormChangedDescription';
-import IEffectsUtils from '../types/IEffectsUtils';
-import { convertServerFieldsErrors } from './helpers';
+import IFormChangedDescription from '../types/IFormChangedDescription';
+import { IError } from 'sfs-common/types/IFormFieldsErrors';
+import { IUserState } from './types/user';
+import IFormFieldsErrors from 'sfs-common/types/IFormFieldsErrors';
+import createUserModel from 'sfs-common/store/createUserModel';
 
-export default {
-    namespace: 'user',
-
-    state: {
-        registerFormData: {},
-        registerFormSubmitting: false,
-        registerFormFieldsErrors: {}
-    },
-
-    subscriptions: {
-    },
-
-    effects: {
-        *register(action: IRegisterAction, utils: IEffectsUtils) {
-            const result: IResponseData = yield utils.call(api.userController.register, action.payload);
-            if (result.httpCode !== 200) {
-                yield utils.put({ type: 'setRegisterFieldsErrors', payload: result.fields });
-            }
-
-            return result.httpCode === 200;
-        }
-    },
-
+export default createUserModel(api, {
     reducers: {
         setRegisterFormData(
             state: IUserState,
@@ -47,14 +24,6 @@ export default {
                 registerFormData: assign({}, state.registerFormData, formData),
                 registerFormFieldsErrors: assign({}, state.registerFormFieldsErrors, errors)
             });
-        },
-        setRegisterFieldsErrors(
-            state: IUserState,
-            { payload }: { payload?: ResponseFieldsErrors }
-        ): IUserState {
-            return assign({}, state, {
-                registerFormFieldsErrors: convertServerFieldsErrors(payload || [])
-            });
         }
     }
-};
+});

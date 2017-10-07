@@ -12,6 +12,6 @@ const App = StackNavigator({
     Register: { screen: RegisterPage }
 });
 
-export default function a() {
+export default function () {
     return (<App />);
 };

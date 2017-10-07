@@ -4,7 +4,7 @@ import { FormComponentProps } from 'antd/lib/form/Form';
 import './RegisterForm.less';
 import IFormChangedDescription from '../types/IFormChangedDescription';
 import IUser from 'sfs-common/types/IUser';
-import { IFormFieldsErrors } from '../types/IFormChangedDescription';
+import IFormFieldsErrors from 'sfs-common/types/IFormFieldsErrors';
 
 interface RegisterFormProps {
     onSubmit: (data: any) => void;

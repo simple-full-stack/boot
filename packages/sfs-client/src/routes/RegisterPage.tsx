@@ -8,7 +8,7 @@ import IUser from 'sfs-common/types/IUser';
 import { get } from 'lodash';
 import { Dispatch } from 'react-redux';
 import IFormChangedDescription from '../types/IFormChangedDescription';
-import { IFormFieldsErrors } from '../types/IFormChangedDescription';
+import IFormFieldsErrors from 'sfs-common/types/IFormFieldsErrors';
 
 interface StateProps {
     submitting: boolean;

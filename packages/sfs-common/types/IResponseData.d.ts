@@ -1,4 +1,4 @@
-import IFieldError from 'sfs-common/types/IFieldError';
+import IFieldError from './IFieldError';
 
 export declare type ResponseFieldsErrors = IFieldError[];
 export declare type ResponseGlobalError = string | object;

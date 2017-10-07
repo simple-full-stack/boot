@@ -1,7 +1,4 @@
-export interface IError {
-    field: string;
-    message: string;
-}
+import { IError } from 'sfs-common/types/IFormFieldsErrors';
 
 export default interface IFormChangedDescription {
     [field: string]: {
@@ -9,8 +6,4 @@ export default interface IFormChangedDescription {
         value: any;
         errors?: IError[];
     };
-}
-
-export interface IFormFieldsErrors {
-    [field: string]: IError[];
 }
