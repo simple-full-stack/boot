@@ -1,9 +1,8 @@
 import dva from 'dva-no-router';
-import { getRequesters } from './api';
 import user from './user';
 
 const app = dva();
 
-app.model(user(getRequesters));
+app.model(user());
 
 export default app;
