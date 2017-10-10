@@ -1,9 +1,23 @@
-import { set, clone, get, isArray, isString, isObject } from 'lodash';
+import { set, clone, get, isArray, isString, isObject, assign, cloneDeep } from 'lodash';
+
+interface State {
+    [key: string]: any;
+}
+
+type Path = string[] | string | object;
 
 export default class Base {
-    state: { [key: string]: any } = {};
+    private state: State = assign(cloneDeep(this.getDefaultState()), this.getInitialState());
 
-    protected set(path: string[] | string | object, value?: any) {
+    protected getInitialState(): State {
+        return {};
+    }
+
+    protected getDefaultState(): State {
+        return {};
+    }
+
+    protected set(path: Path, value?: any) {
         if (isArray(path) || isString(path)) {
             set(this.state, path, value);
         } else if (isObject(path)) {
@@ -11,15 +25,17 @@ export default class Base {
                 set(this.state, key, path[key]);
             }
         }
-
-        this.state = clone(this.state);
     }
 
-    protected get(path): any {
-        return get(this.state, path);
+    protected get<T>(path?: Path, dft?: T): T {
+        return get(this.state, path, dft);
     }
 
-    clear() {
-        this.state = {};
+    getState(): State {
+        return this.state;
+    }
+
+    reset() {
+        assign(this.state, cloneDeep(this.getDefaultState()));
     }
 }

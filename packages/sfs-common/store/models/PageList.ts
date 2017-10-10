@@ -1,9 +1,6 @@
 import Base from './Base';
 import { cloneDeep, assign } from 'lodash';
-
-interface RequestParams {
-    [key: string]: string
-}
+import { RequestParams } from './types';
 
 interface ResponseResult {
     list: any[];
@@ -14,25 +11,27 @@ interface ResponseResult {
     }
 }
 
-export default class PageList extends Base {
-    protected defaultState = {
-        list: [],
-        pageInfo: {
-            pageNo: 0,
-            pageSize: 30,
-            pageSizes: [30, 50, 100],
-            totalCount: 0,
-            isLoading: false
-        }
-    };
-
-    state = cloneDeep(this.defaultState);
-
+export default abstract class PageList extends Base {
     private isStarted = false;
     private params: RequestParams = null;
 
-    getRequester(): (params: RequestParams) => Promise<ResponseResult> {
-        throw new Error('must be implemented!');
+    protected abstract getRequester(): (params: RequestParams) => Promise<ResponseResult>;
+
+    protected getDefaultState() {
+        return {
+            list: [],
+            pageInfo: {
+                pageNo: 0,
+                pageSize: 30,
+                pageSizes: [30, 50, 100],
+                totalCount: 0,
+                isLoading: false
+            }
+        };
+    }
+
+    protected getInitialState() {
+        return {};
     }
 
     start(params: RequestParams) {
@@ -44,7 +43,7 @@ export default class PageList extends Base {
         this.isStarted = true;
     }
 
-    async request(pageNo: number = (this.state.pageInfo.pageNo || 0) + 1): Promise<ResponseResult> {
+    async request(pageNo: number = (this.get('pageInfo.pageNo', 0) + 1)): Promise<ResponseResult> {
         if (!this.isStarted) {
             throw new Error('not started!')
         }
@@ -64,12 +63,8 @@ export default class PageList extends Base {
     }
 
     stop() {
-        this.clear();
+        this.reset();
         this.params = null;
         this.isStarted = false;
-    }
-
-    clear() {
-        this.state = cloneDeep(this.defaultState);
     }
 }
