@@ -1,36 +1,40 @@
-import * as React from 'react';
+import { Layout } from 'antd';
 import { connect } from 'dva';
 import { RouteComponentProps } from 'dva/router';
-import { Layout } from 'antd';
+import * as React from 'react';
 
-interface DashboardStateProps {}
+interface IDashboardStateProps {
+    holder?: string;
+}
 
-interface DashboardDispatchProps {}
+interface IDashboardDispatchProps {
+    holder?: string;
+}
 
-class Dashboard extends React.Component<DashboardStateProps & DashboardDispatchProps & RouteComponentProps<any>> {
-    render() {
+class Dashboard extends React.Component<IDashboardStateProps & IDashboardDispatchProps & RouteComponentProps<any>> {
+    public render() {
         const { Header, Sider, Content, Footer } = Layout;
         return (
             <Layout>
-                <Header></Header>
+                <Header>111</Header>
                 <Layout>
-                    <Sider></Sider>
+                    <Sider>1111</Sider>
                     <Layout>
                         <div>123</div>
-                        <Content></Content>
+                        <Content>1111</Content>
                     </Layout>
-                    <Footer>456</Footer>
                 </Layout>
+                <Footer>456</Footer>
             </Layout>
         );
     }
 }
 
-function mapStateToProps(): DashboardStateProps {
+function mapStateToProps(): IDashboardStateProps {
     return {};
 }
 
-function mapDispatchToProps(): DashboardDispatchProps {
+function mapDispatchToProps(): IDashboardDispatchProps {
     return {};
 }
 
