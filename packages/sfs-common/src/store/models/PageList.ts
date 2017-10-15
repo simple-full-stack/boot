@@ -1,8 +1,8 @@
 import Base from './Base';
-import { cloneDeep, assign } from 'lodash';
+import { assign } from 'lodash';
 import { RequestParams } from './types';
 
-interface ResponseResult {
+export interface ResponseResult {
     list: any[];
     pageInfo: {
         pageNo: number;
@@ -13,7 +13,7 @@ interface ResponseResult {
 
 export default abstract class PageList extends Base {
     private isStarted = false;
-    private params: RequestParams = null;
+    private params?: RequestParams = undefined;
 
     protected abstract getRequester(): (params: RequestParams) => Promise<ResponseResult>;
 
@@ -50,7 +50,7 @@ export default abstract class PageList extends Base {
 
         this.set('pageInfo.isLoading', true);
         const params = assign({}, this.params, { pageNo });
-        const result = await this.getRequester()(params);
+        const result = await this.getRequester()(params || {});
         this.set({
             'list': result.list,
             'pageInfo.pageNo': result.pageInfo.pageNo,
@@ -64,7 +64,7 @@ export default abstract class PageList extends Base {
 
     stop() {
         this.reset();
-        this.params = null;
+        this.params = undefined;
         this.isStarted = false;
     }
 }

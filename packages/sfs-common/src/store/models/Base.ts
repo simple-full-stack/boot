@@ -1,10 +1,10 @@
-import { set, clone, get, isArray, isString, isObject, assign, cloneDeep } from 'lodash';
+import { set, get, isArray, isString, isObject, assign, cloneDeep } from 'lodash';
 
-interface State {
+export interface State {
     [key: string]: any;
 }
 
-type Path = string[] | string | object;
+export type Path = string[] | string | { [key: string]: any };
 
 export default class Base {
     private state: State = assign(cloneDeep(this.getDefaultState()), this.getInitialState());
@@ -27,7 +27,7 @@ export default class Base {
         }
     }
 
-    protected get<T>(path?: Path, dft?: T): T {
+    protected get<T>(path: Path, dft?: T): T {
         return get(this.state, path, dft);
     }
 

@@ -4,7 +4,7 @@ import IResponseData, { ResponseFieldsErrors } from '../types/IResponseData';
 import { assign, get, set } from 'lodash';
 import { convertServerFieldsErrors, extendModel, getAPIRequester } from './helpers';
 import IModel from './types/IModel';
-import IFormFieldsErrors, { IError } from 'sfs-common/types/IFormFieldsErrors';
+import IFormFieldsErrors, { IError } from '../types/IFormFieldsErrors';
 
 export default function createUserModel(api: any, ...models: IModel[]): IModel {
     return extendModel({

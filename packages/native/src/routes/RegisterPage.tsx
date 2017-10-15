@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { getRequesters } from '../store/api';
 import { InputItem, Button, List, Toast } from 'antd-mobile';
 import inputItemStyles from 'antd-mobile/lib/input-item/style';
 import { extendStyleSheet } from '../common/utils';

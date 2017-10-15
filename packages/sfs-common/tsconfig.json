@@ -1,13 +1,20 @@
 {
     "extends": "../../tsconfig",
     "compilerOptions": {
-        "module": "CommonJS",
+        "module": "es6",
         "target": "es5",
         "lib": [
-            "es2015"
-        ]
+            "ES2015"
+        ],
+        "outDir": "./lib",
+        "declaration": true,
+        "rootDir": "./src"
     },
-    "include": [
-        "./types/**/*"
+    // "include": [
+    //     "./src"
+    // ]
+    "exclude": [
+        "node_modules",
+        "lib"
     ]
 }

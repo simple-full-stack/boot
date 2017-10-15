@@ -2,7 +2,7 @@ import Base from './Base';
 import { RequestParams } from './types';
 import { assign } from 'lodash';
 
-interface ResponseResult {
+export interface ResponseResult {
     list: any[];
     pageInfo: {
         startFlag?: any;
@@ -18,7 +18,7 @@ export enum LoadingStatus {
 
 export default abstract class ContinuousList extends Base {
     private isStarted = false;
-    private params: RequestParams = null;
+    private params?: RequestParams = undefined;
 
     protected getDefaultState() {
         return {
@@ -47,7 +47,7 @@ export default abstract class ContinuousList extends Base {
 
     stop() {
         this.reset();
-        this.params = null;
+        this.params = undefined;
         this.isStarted = false;
     }
 
@@ -59,7 +59,7 @@ export default abstract class ContinuousList extends Base {
         this.set('pageInfo.loadingStatus', LoadingStatus.DOWN);
 
         const params = assign({}, this.params, { offset, endFlag: this.get('pageInfo.endFlag', '') });
-        const result = await this.getRequester()(params);
+        const result = await this.getRequester()(params || {});
 
         this.set({
             'list': result.list,
@@ -78,7 +78,7 @@ export default abstract class ContinuousList extends Base {
         this.set('pageInfo.loadingStatus', LoadingStatus.UP);
 
         const params = assign({}, this.params, { offset, startFlag: this.get('pageInfo.startFlag', '') });
-        const result = await this.getRequester()(params);
+        const result = await this.getRequester()(params || {});
 
         this.set({
             'list': result.list,

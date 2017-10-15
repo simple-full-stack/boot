@@ -10,8 +10,8 @@
                     "not ie < 9"
                 ]
             },
-            "useBuiltIns": true,
-            "debug": true
+            "useBuiltIns": true //,
+            // "debug": true
         }],
         "stage-2"
     ],

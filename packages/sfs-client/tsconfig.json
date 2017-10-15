@@ -4,7 +4,12 @@
         "module": "es6",
         "target": "es6",
         "jsx": "preserve",
-        "lib": ["es7", "dom"]
+        "lib": ["es7", "dom"],
+        "baseUrl": ".",
+        "paths": {
+            "sfs-common/*": ["node_modules/sfs-common/lib/*"]
+        },
+        "preserveSymlinks": true
     },
     "include": [
         "./src/**/*"
