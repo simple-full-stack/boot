@@ -16,7 +16,7 @@ export interface IAPIConfig {
 }
 
 export interface IRequester {
-    [fnName: string]: (...args: Array<any>) => AxiosPromise;
+    [fnName: string]: (...args: any[]) => AxiosPromise;
 }
 
 export interface IRequesters {

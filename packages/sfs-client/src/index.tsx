@@ -1,9 +1,9 @@
-import './assets/css/main.less';
+import createLoading from 'dva-loading';
 import 'regenerator-runtime/runtime';
+import './assets/css/main.less';
+import router from './router';
 import './store/api';
 import app from './store/app';
-import router from './router';
-import createLoading from 'dva-loading';
 
 app.use(createLoading());
 app.router(router);

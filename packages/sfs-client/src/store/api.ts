@@ -1,5 +1,5 @@
-import { camelCase, each, assign, get } from 'lodash';
 import axios from 'axios';
+import { assign, camelCase, each, get } from 'lodash';
 import { API_KEY, IRequesters } from './types/api';
 
 const apiConfig = get(window, API_KEY);
@@ -9,7 +9,7 @@ each(apiConfig, (description, path) => {
     const [, , ns, fnName] = path.split('/');
     const nsCamel = camelCase(ns);
     requesters[nsCamel] = requesters[ns] || {};
-    requesters[nsCamel][fnName] = async function (...args: Array<any>) {
+    requesters[nsCamel][fnName] = async (...args: any[]) => {
         if (args.length !== description.parameterCount) {
             throw new Error(`${ns}.${fnName}: The arguments count should be ${description.parameterCount}.`);
         }
