@@ -58,7 +58,7 @@ export default function (this: Builder) {
             publicPath: '/'
         },
         resolve: {
-            extensions: ['.js', '.vue', '.json'],
+            extensions: ['.js', '.json', '.ts', '.tsx', '.vue'],
             alias: this.options.alias ? this.options.alias : {
                 'babel-runtime': require('path').dirname(
                     require.resolve('babel-runtime/package.json')
@@ -106,28 +106,33 @@ export default function (this: Builder) {
         module: {
             rules: this.options.loaders ? this.options.loaders : [
                 {
-                    test: /\.js$/,
-                    loader: require.resolve('./veui-loader.js'),
+                    test: /.tsx?$/,
+                    loader: 'tslint-loader',
                     enforce: 'pre',
                     include: [
                         this.resolve('src')
-                    ],
-                    options: babelOptions
+                    ]
                 },
                 {
                     test: /\.vue$/,
                     loader: 'vue-loader',
                     options: {
-                        preLoaders: {
-                            js: require.resolve('./veui-loader.js') + '?' + JSON.stringify(babelOptions)
-                        },
                         loaders: {
                             less: lessLoaders.filter((item: {loader: string}) => item.loader !== 'postcss-loader'),
-                            js: 'babel-loader?' + JSON.stringify(babelOptionsWithCache)
+                            js: 'babel-loader?' + JSON.stringify(babelOptionsWithCache),
+                            ts: [
+                                'babel-loader?' + JSON.stringify(babelOptionsWithCache),
+                                'ts-loader',
+                                'tslint-loader'
+                            ]
                         },
                         preserveWhitespace: false,
                         postcss: get(this.postcss(), 'plugins')
-                    }
+                    },
+                    include: [
+                        this.resolve('src'),
+                        this.resolve('node_modules/iview')
+                    ]
                 },
                 {
                     test: /\.js$/,
@@ -136,6 +141,24 @@ export default function (this: Builder) {
                         this.resolve('src')
                     ],
                     options: babelOptionsWithCache
+                },
+                {
+                    test: /\.tsx?$/,
+                    use: [
+                        {
+                            loader: 'babel-loader',
+                            options: babelOptions
+                        },
+                        {
+                            loader: 'ts-loader',
+                            options: {
+                                appendTsSuffixTo: [/\.vue$/]
+                            }
+                        }
+                    ],
+                    include: [
+                        this.resolve('src')
+                    ]
                 },
                 {
                     test: /\.css$/,

@@ -5,14 +5,13 @@ import * as webpack from 'webpack';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 import {get, mapValues} from 'lodash';
 import * as FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin';
-import * as path from 'path';
 
 export default function (this: Builder) {
     let config = base.call(this);
     config = webpackMerge(config, {
         resolve: this.options.alias ? this.options.alias : {
             alias: {
-                vue$: 'vue/dist/vue.esm.js'
+                vue$: 'vue/dist/vue.js'
             }
         },
         devtool: '#cheap-module-eval-source-map',
@@ -39,9 +38,9 @@ export default function (this: Builder) {
         ]
     });
 
-    const devClientPath = path.resolve(__dirname, './devClient.js');
-    Object.keys(config.entry).forEach((name) => {
-        config.entry[name] = [devClientPath].concat(config.entry[name]);
-    });
+    // const devClientPath = path.resolve(__dirname, './devClient.js');
+    // Object.keys(config.entry).forEach((name) => {
+    //     config.entry[name] = [devClientPath].concat(config.entry[name]);
+    // });
     return config;
 }

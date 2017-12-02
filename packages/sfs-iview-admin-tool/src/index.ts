@@ -33,20 +33,6 @@ export function dist() {
     return builder.runBuildProd();
 }
 
-export function distForRD() {
-    const config = getConfig();
-    config.env = 'rd';
-    const builder = new Builder(config);
-    return builder.runBuildRD();
-}
-
-export function distForOff() {
-    const config = getConfig();
-    config.env = 'off';
-    const builder = new Builder(config);
-    return builder.runBuildOff();
-}
-
 export function distServer() {
     const config = getConfig();
     config.env = 'distServer';
