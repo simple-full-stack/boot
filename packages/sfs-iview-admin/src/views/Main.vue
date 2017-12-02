@@ -4,10 +4,10 @@
 <template>
     <div class="main" :class="{'main-hide-text': shrink}">
         <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}">
-            <shrinkable-menu 
+            <shrinkable-menu
                 :shrink="shrink"
                 @on-change="handleSubmenuChange"
-                :theme="menuTheme" 
+                :theme="menuTheme"
                 :before-push="beforePush"
                 :open-names="openedSubmenuArr"
                 :menu-list="menuList">
@@ -34,7 +34,7 @@
                     <lock-screen></lock-screen>
                     <message-tip v-model="mesCount"></message-tip>
                     <theme-switch></theme-switch>
-                    
+
                     <div class="user-dropdown-menu-con">
                         <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
                             <Dropdown transfer trigger="click" @on-click="handleClickUserDropdown">
@@ -74,8 +74,9 @@
     import messageTip from './main-components/message-tip.vue';
     import themeSwitch from './main-components/theme-switch/theme-switch.vue';
     import Cookies from 'js-cookie';
-    import util from '@/libs/util.js';
-    
+    import util from '@/libs/util';
+    import {cloneDeep} from 'lodash';
+
     export default {
         components: {
             shrinkableMenu,
@@ -91,33 +92,33 @@
                 shrink: false,
                 userName: '',
                 isFullScreen: false,
-                openedSubmenuArr: this.$store.state.app.openedSubmenuArr
+                openedSubmenuArr: cloneDeep(this.$store.state.app.openedSubmenuArr)
             };
         },
         computed: {
             menuList () {
-                return this.$store.state.app.menuList;
+                return cloneDeep(this.$store.state.app.menuList);
             },
             pageTagsList () {
-                return this.$store.state.app.pageOpenedList;  // 打开的页面的页面对象
+                return cloneDeep(this.$store.state.app.pageOpenedList);  // 打开的页面的页面对象
             },
             currentPath () {
-                return this.$store.state.app.currentPath;  // 当前面包屑数组
+                return cloneDeep(this.$store.state.app.currentPath);  // 当前面包屑数组
             },
             avatorPath () {
-                return localStorage.avatorImgPath;
+                return cloneDeep(localStorage.avatorImgPath);
             },
             cachePage () {
-                return this.$store.state.app.cachePage;
+                return cloneDeep(this.$store.state.app.cachePage);
             },
             lang () {
-                return this.$store.state.app.lang;
+                return cloneDeep(this.$store.state.app.lang);
             },
             menuTheme () {
-                return this.$store.state.app.menuTheme;
+                return cloneDeep(this.$store.state.app.menuTheme);
             },
             mesCount () {
-                return this.$store.state.app.messageCount;
+                return cloneDeep(this.$store.state.app.messageCount);
             }
         },
         methods: {

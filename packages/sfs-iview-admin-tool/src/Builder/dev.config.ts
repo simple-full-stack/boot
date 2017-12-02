@@ -11,7 +11,7 @@ export default function (this: Builder) {
     config = webpackMerge(config, {
         resolve: this.options.alias ? this.options.alias : {
             alias: {
-                vue$: 'vue/dist/vue.js'
+                vue$: 'vue/dist/vue.esm.js'
             }
         },
         devtool: '#cheap-module-eval-source-map',

@@ -34,9 +34,10 @@
     "sortablejs": "^1.7.0",
     "tinymce": "^4.7.3",
     "vue": "^2.5.8",
-    "vue-i18n": "^5.0.3",
+    "vue-class-component": "^6.1.0",
+    "vue-i18n": "7.3.2",
     "vue-router": "^2.8.1",
-    "vuex": "^2.5.0"
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "@sfs/sfs-iview-admin-tool": "0.0.1",

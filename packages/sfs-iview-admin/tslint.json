@@ -1,6 +1,6 @@
 {
     "extends": [
-        "tslint:latest"
+        "tslint:recommended"
     ],
     "rules": {
         "quotemark": [true, "single"],
@@ -32,6 +32,7 @@
         "no-invalid-this": false,
         "no-http-string": false,
         "newline-before-return": false,
-        "no-submodule-imports": false
+        "no-submodule-imports": false,
+        "ban-types": false
     }
 }

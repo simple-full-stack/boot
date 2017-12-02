@@ -186,9 +186,11 @@ import countUp from './components/countUp.vue';
 import inforCard from './components/inforCard.vue';
 import mapDataTable from './components/mapDataTable.vue';
 import toDoListItem from './components/toDoListItem.vue';
+import BaseView from '../BaseView';
+import Component from 'vue-class-component';
 
-export default {
-    name: 'home',
+@Component({
+    namespace: 'home',
     components: {
         homeMap,
         dataSourcePie,
@@ -199,63 +201,63 @@ export default {
         inforCard,
         mapDataTable,
         toDoListItem
-    },
-    data () {
-        return {
-            toDoList: [
-                {
-                    title: '去iView官网学习完整的iView组件'
-                },
-                {
-                    title: '去iView官网学习完整的iView组件'
-                },
-                {
-                    title: '去iView官网学习完整的iView组件'
-                },
-                {
-                    title: '去iView官网学习完整的iView组件'
-                },
-                {
-                    title: '去iView官网学习完整的iView组件'
-                }
-            ],
-            count: {
-                createUser: 496,
-                visit: 3264,
-                collection: 24389305,
-                transfer: 39503498
-            },
-            cityData: cityData,
-            showAddNewTodo: false,
-            newToDoItemValue: ''
-        };
-    },
-    computed: {
-        avatorPath () {
-            return localStorage.avatorImgPath;
+    }
+})
+export default class Home extends BaseView {
+    toDoList = [
+        {
+            title: '去iView官网学习完整的iView组件'
+        },
+        {
+            title: '去iView官网学习完整的iView组件'
+        },
+        {
+            title: '去iView官网学习完整的iView组件'
+        },
+        {
+            title: '去iView官网学习完整的iView组件'
+        },
+        {
+            title: '去iView官网学习完整的iView组件'
         }
-    },
-    methods: {
-        addNewToDoItem () {
-            this.showAddNewTodo = true;
-        },
-        addNew () {
-            if (this.newToDoItemValue.length !== 0) {
-                this.toDoList.unshift({
-                    title: this.newToDoItemValue
-                });
-                setTimeout(() => {
-                    this.newToDoItemValue = '';
-                }, 200);
-                this.showAddNewTodo = false;
-            } else {
-                this.$Message.error('请输入待办事项内容');
-            }
-        },
-        cancelAdd () {
+    ];
+
+    count = {
+        createUser: 496,
+        visit: 3264,
+        collection: 24389305,
+        transfer: 39503498
+    };
+
+    cityData = cityData;
+    showAddNewTodo = false;
+    newToDoItemValue = '';
+
+    get avatorPath () {
+        return localStorage.avatorImgPath;
+    }
+
+    addNewToDoItem() {
+        this.showAddNewTodo = true;
+    }
+
+    addNew() {
+        if (this.newToDoItemValue.length !== 0) {
+            this.toDoList.unshift({
+                title: this.newToDoItemValue
+            });
+            setTimeout(() => {
+                this.newToDoItemValue = '';
+            }, 200);
             this.showAddNewTodo = false;
-            this.newToDoItemValue = '';
+        } else {
+            this.$Message.error('请输入待办事项内容');
         }
     }
-};
+
+    cancelAdd() {
+        this.showAddNewTodo = false;
+        this.newToDoItemValue = '';
+    }
+}
 </script>
