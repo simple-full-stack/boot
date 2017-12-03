@@ -25,22 +25,6 @@ export default function (this: Builder) {
             require.resolve('babel-preset-stage-2')
         ],
         plugins: babelPlugins ? babelPlugins : [
-            [
-                require.resolve('babel-plugin-veui'),
-                {
-                    modules: [
-                        {
-                            package: 'veui-theme-one',
-                            fileName: '${module}.less'
-                        },
-                        {
-                            package: 'veui-theme-one',
-                            fileName: '${module}.js',
-                            transform: false
-                        }
-                    ]
-                }
-            ],
             require.resolve('babel-plugin-lodash'),
             require.resolve('babel-plugin-transform-vue-jsx'),
             require.resolve('babel-plugin-transform-decorators-legacy'),

@@ -52,7 +52,7 @@ export default function (this: Builder) {
             ...(this.options.entries || []).map(entry => new HtmlWebpackPlugin({
                 title: get(this.options.entriesTitle, entry, ''),
                 filename: `${entry}/index.html`,
-                template: this.resolve(`entry/${entry}.html`),
+                template: this.resolve(`entry/${entry}.ejs`),
                 inject: true,
                 minify: {
                     removeComments: true,
@@ -61,29 +61,19 @@ export default function (this: Builder) {
                     // more options:
                     // https://github.com/kangax/html-minifier#options-quick-reference
                 },
-                chunks: ['manifest', 'vendor', `${entry}`],
+                chunks: ['vendors.base', 'vendors.exten', 'manifest', entry],
                 // necessary to consistently work with multiple chunks via CommonsChunkPlugin
                 chunksSortMode: 'dependency'
             })),
-            // split vendor js into its own file
-            new webpack.optimize.CommonsChunkPlugin({
-                name: 'vendor',
-                minChunks: (module) => {
-                    // any required modules inside node_modules are extracted to vendor
-                    return (
-                        module.resource &&
-                        /\.js$/.test(module.resource) &&
-                        module.resource.indexOf(
-                            this.resolve('node_modules')
-                        ) === 0
-                    );
-                }
-            }),
             // extract webpack runtime and module manifest to its own file in order to
             // prevent vendor hash from being updated whenever app bundle is updated
             new webpack.optimize.CommonsChunkPlugin({
+                names: ['vendors.base', 'vendors.exten'],
+                minChunks: Infinity
+            }),
+            new webpack.optimize.CommonsChunkPlugin({
                 name: 'manifest',
-                chunks: ['vendor']
+                minChunks: Infinity
             }),
             // copy custom static assets
             new CopyWebpackPlugin([

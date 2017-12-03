@@ -16,8 +16,6 @@ export default function (this: Builder) {
             loader: 'less-loader',
             options: {
                 modifyVars: {
-                    '@veui-theme-color-nav': '#304ffe',
-                    '@veui-theme-color-primary': '#304ffe',
                     '@support-ie-version': 9
                 }
             }
