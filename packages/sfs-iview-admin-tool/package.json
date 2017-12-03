@@ -1,6 +1,6 @@
 {
     "name": "sfs-iview-admin-tool",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "tool for projects base on iview-admin",
     "main": "index.js",
     "scripts": {

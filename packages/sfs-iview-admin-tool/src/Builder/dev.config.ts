@@ -32,8 +32,8 @@ export default function (this: Builder) {
                 title: get(this.options.entriesTitle, entry, ''),
                 filename: `${entry}/index.html`,
                 template: this.resolve(`entry/${entry}.ejs`),
-                chunks: [`${entry}`],
-                inject: false
+                chunks: [entry],
+                inject: true
             })),
             new FriendlyErrorsPlugin()
         ]
