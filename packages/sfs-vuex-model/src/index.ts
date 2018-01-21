@@ -2,7 +2,7 @@
  * @file index
  * @author yibuyisheng(yibuyisheng@163.com)
  */
-import Vue from 'vue';
+import { default as Vue } from 'vue';
 
 declare module 'vue/types/vue' {
     interface IConstant {
@@ -27,8 +27,8 @@ declare module 'vue/types/options' {
     }
 }
 
-export { default } from './common/store';
-export { default as pageMixin } from './common/pageMixin';
-export { default as BaseModule } from './common/BaseModule';
-export { default as NetworkModule } from './common/NetworkModule';
-export { default as action } from './common/decorators/action';
+export { default } from './store';
+export { default as pageMixin } from './pageMixin';
+export { default as BaseModule } from './BaseModule';
+export { default as NetworkModule } from './NetworkModule';
+export { default as action } from './decorators/action';

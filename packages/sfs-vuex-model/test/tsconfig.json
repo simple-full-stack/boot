@@ -1,0 +1,13 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "sfs-vuex-model": ["../src"]
+        }
+    },
+    "include": [
+        "../src/**/*",
+        "./**/*"
+    ]
+}

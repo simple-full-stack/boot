@@ -3,7 +3,7 @@
  * @author yibuyisheng(yibuyisheng@163.com)
  */
 
-import Vue, { ComponentOptions } from 'vue';
+import { default as Vue, ComponentOptions } from 'vue';
 
 const mixin: ComponentOptions<Vue>  = {
     created(): void {

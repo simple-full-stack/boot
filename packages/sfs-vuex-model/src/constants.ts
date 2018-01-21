@@ -3,7 +3,7 @@
  * @author yibuyisheng(yibuyisheng@163.com)
  */
 import { isString } from 'lodash';
-import Vue from 'vue';
+import { default as Vue } from 'vue';
 
 export interface IConstant {
     [key: string]: string;

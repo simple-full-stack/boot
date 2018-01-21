@@ -3,7 +3,7 @@
  * @author yibuyisheng(yibuyisheng@163.com)
  */
 import Vuex, {Store} from 'vuex';
-import Vue from 'vue';
+import { default as Vue } from 'vue';
 
 Vue.use(Vuex);
 

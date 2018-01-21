@@ -2,15 +2,19 @@
  * @file BaseModule
  * @author yibuyisheng(yibuyisheng@163.com)
  */
-import { each, isObject, snakeCase, assign, get } from 'lodash';
-import Vue from 'vue';
+import { assign, each, get, isObject, snakeCase } from 'lodash';
+import { default as Vue} from 'vue';
 import { setConstants } from './constants';
-import mutation from './decorators/mutation';
 import action from './decorators/action';
+import mutation from './decorators/mutation';
 import { getStore } from './store';
 import { Module, Store } from 'vuex';
 
-type VuexModuleMap = Record<string, (_: {}, params: {}) => {}>;
+type VuexModuleMap = Record<string, (_: {}, params: {}) => {} | undefined | null>;
+
+export interface IState {
+    [key: string]: {} | undefined | null;
+}
 
 function getActions(model: BaseModule, cstObj: {}): VuexModuleMap {
     const $$action: VuexModuleMap = {};
@@ -75,7 +79,7 @@ function getGetters(model: BaseModule, constants: {}): VuexModuleMap {
     });
 
     // 默认给所有 state 都生成 getter
-    each(model.state, (_: {}, key: string) => {
+    each(model.state, (_: {} | undefined | null, key: string) => {
         const name: string = get(model.$nameMap, [key], key);
         const getterName: string = `${model.$namespace}:${name}`;
 
@@ -83,7 +87,7 @@ function getGetters(model: BaseModule, constants: {}): VuexModuleMap {
             !(key in model)
             && !Object.prototype.hasOwnProperty.call($$getter, getterName)
         ) {
-            $$getter[getterName] = (): {} => model.state[key];
+            $$getter[getterName] = (): {} | undefined | null => model.state && model.state[key];
             assign(model, {
                 [key]: getStore().getters[getterName],
             });
@@ -97,14 +101,14 @@ function getGetters(model: BaseModule, constants: {}): VuexModuleMap {
     return $$getter;
 }
 
-function getState(model: BaseModule): Record<string, {}> {
+function getState(model: BaseModule): IState {
     return model.state;
 }
 
 export type RawModule<S, R> = { namespace: string; constants: Record<string, string>; } & Module<S, R>;
-export function createModule<R>(m: BaseModule): RawModule<Record<string, {}>, R> {
+export function createModule<R>(m: BaseModule): RawModule<IState, R> {
     const constants: Record<string, string> = {};
-    const state: Record<string, {}> = getState(m);
+    const state: IState = getState(m);
     const $$mutation: VuexModuleMap = getMutations(m);
     const $$action: VuexModuleMap = getActions(m, constants);
     const $$getter: VuexModuleMap = getGetters(m, constants);
@@ -129,14 +133,14 @@ export default class BaseModule {
      * @param {*} value value
      */
     // tslint:disable:no-reserved-keywords function-name
-    public static set(target: Record<string, {}>, key: string, value: {}): void {
+    public static set(target: IState, key: string, value: {}): void {
     // tslint:enable:no-reserved-keywords function-name
         Vue.set(target, key, value);
     }
 
     // 主要根据 ModelClass 创建 Model 实例。
     // tslint:disable:function-name
-    public static create<R>(): RawModule<Record<string, {}>, R> {
+    public static create<R>(): RawModule<IState, R> {
     // tslint:enable:function-name
         const m: BaseModule = new this();
         return createModule(m);
@@ -151,7 +155,7 @@ export default class BaseModule {
     // tslint:disable:function-name
     public static register(): void {
     // tslint:enable:function-name
-        const m: RawModule<Record<string, {}>, {}> = this.create();
+        const m: RawModule<IState, {}> = this.create();
         getStore().registerModule(m.namespace, m);
         setConstants(m.namespace, m.constants);
     }
@@ -182,7 +186,7 @@ export default class BaseModule {
      *
      * @type {Object}
      */
-    public state: Record<string, {}> = {};
+    public state: IState = {};
 
     /**
      * 全局 store
