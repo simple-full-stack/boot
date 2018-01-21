@@ -25,7 +25,7 @@ function getActions(model: BaseModule, cstObj: {}): VuexModuleMap {
         }
 
         const name: string = get(model.$nameMap, [fnName], fnName);
-        const fn: Function = (get(model, fnName) as Function).bind(model);
+        const fn: (p: {}) => {} = (get(model, fnName) as (p: {}) => {}).bind(model);
         const actionName: string = `${model.$namespace}:${name}`;
         $$action[actionName] = (_: {}, params: {}): {} => fn(params);
         assign(model, {
@@ -49,7 +49,7 @@ function getMutations(model: BaseModule): VuexModuleMap {
         }
 
         const name: string = get(model.$nameMap, [fnName], fnName);
-        const fn: Function = (get(model, fnName) as Function).bind(model);
+        const fn: (p: {}) => {} = (get(model, fnName) as (p: {}) => {}).bind(model);
         const mutationName: string = `${model.$namespace}:${name}`;
         $$mutation[mutationName] = (_: {}, params: {}): {} => fn(params);
 
@@ -71,7 +71,7 @@ function getGetters(model: BaseModule, constants: {}): VuexModuleMap {
 
         const name: string = get(model.$nameMap, [fnName], fnName);
         const getterName: string = `${model.$namespace}:${name}`;
-        $$getter[getterName] = (): {} => (get(model, fnName) as Function)();
+        $$getter[getterName] = (): {} => (get(model, fnName) as () => {})();
 
         assign(constants, {
             [name.replace(/[A-Z]{1}/g, (match: string) => (`_${match}`)).toUpperCase()]: getterName,
@@ -159,7 +159,6 @@ export default class BaseModule {
         getStore().registerModule(m.namespace, m);
         setConstants(m.namespace, m.constants);
     }
-
 
     public $$getter: string[];
 

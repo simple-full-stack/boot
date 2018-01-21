@@ -10,7 +10,7 @@ export interface IGetterModule extends Record<string, {}> {
 }
 
 export function getter(target: {}, key: string): void {
-    const getterModule: IGetterModule = <IGetterModule>target;
+    const getterModule: IGetterModule = target as IGetterModule;
     assign(getterModule, { $$getter: getObj(getterModule, '$$getter') });
     if (getterModule.$$getter.indexOf(key) === -1) {
         getterModule.$$getter.push(key);

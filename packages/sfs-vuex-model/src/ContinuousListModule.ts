@@ -16,12 +16,12 @@ export interface IPageInfo {
 }
 
 export interface IResponse {
-    list: {}[];
+    list: Array<{}>;
     pageInfo: IPageInfo;
 }
 
 export interface IState extends Record<string, {}> {
-    list: {}[];
+    list: Array<{}>;
     pageInfo: IPageInfo;
 }
 
@@ -38,13 +38,13 @@ export default abstract class ContinuousListModule extends NetworkModule {
             // list 的开始标志
             startFlag: undefined,
             // list 的结束标志
-            endFlag: undefined
-        }
+            endFlag: undefined,
+        },
     };
 
     @action
     public async requestAppend(config: AxiosRequestConfig): Promise<void> {
-        const api: Requester = <Requester>this.getAPI();
+        const api: Requester = this.getAPI() as Requester;
         try {
             this.updatePageInfo({ loadingStatus: LoadingStatus.DOWN });
             const result: {} = await api(this.formatRequest(config, 'append'));
@@ -60,7 +60,7 @@ export default abstract class ContinuousListModule extends NetworkModule {
 
     @action
     public async requestPrepend(config: AxiosRequestConfig): Promise<void> {
-        const api: Requester = <Requester>this.getAPI();
+        const api: Requester = this.getAPI() as Requester;
         try {
             this.updatePageInfo({ loadingStatus: LoadingStatus.UP });
             const result: {} = await api(this.formatRequest(config, 'prepend'));
@@ -77,7 +77,7 @@ export default abstract class ContinuousListModule extends NetworkModule {
     protected abstract getAPIName(): string;
 
     protected formatResponse(response: {}, _: 'append' | 'prepend'): IResponse {
-        return <IResponse>response;
+        return response as IResponse;
     }
 
     protected formatRequest(config: AxiosRequestConfig, _: 'append' | 'prepend'): AxiosRequestConfig {
@@ -88,12 +88,12 @@ export default abstract class ContinuousListModule extends NetworkModule {
         this.updateState('pageInfo', { ...this.state.pageInfo, ...pageInfo });
     }
 
-    private updateList(list: {}[], typ: 'prepend' | 'append'): void {
+    private updateList(list: Array<{}>, typ: 'prepend' | 'append'): void {
         this.updateState(
             'list',
             typ === 'append'
                 ? [...this.state.list, ...list]
-                : [...list, ...this.state.list]
+                : [...list, ...this.state.list],
         );
     }
 

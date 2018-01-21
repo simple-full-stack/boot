@@ -15,12 +15,12 @@ export interface IPageInfo {
 }
 
 export interface IResponse {
-    list: {}[];
+    list: Array<{}>;
     pageInfo: IPageInfo;
 }
 
 export interface IState extends Record<string, {}> {
-    list: {}[];
+    list: Array<{}>;
     pageInfo: IPageInfo;
 }
 
@@ -33,17 +33,17 @@ export default abstract class PageListModule extends NetworkModule {
             pageSize: 30,
             pageSizes: [30, 50, 100],
             totalCount: 0,
-            isLoading: false
-        }
+            isLoading: false,
+        },
     };
 
     @action
     public async requestList(config: AxiosRequestConfig): Promise<void> {
-        const api: Function = this.getAPI();
+        const api: (p: AxiosRequestConfig) => Promise<{}> = this.getAPI();
         try {
             this.updatePageInfo({ isLoading: false });
             const result: {} = await api(this.formatRequest(config));
-            const { pageInfo, list }: { pageInfo: IPageInfo; list: {}[]; } = this.formatResponse(result);
+            const { pageInfo, list }: { pageInfo: IPageInfo; list: Array<{}>; } = this.formatResponse(result);
             this.updatePageInfo(pageInfo);
             this.updateList(list);
         } catch (e) {
@@ -62,7 +62,7 @@ export default abstract class PageListModule extends NetworkModule {
     protected abstract getAPIName(): string;
 
     protected formatResponse(response: {}): IResponse {
-        return <IResponse>response;
+        return response as IResponse;
     }
 
     protected formatRequest(config: AxiosRequestConfig): AxiosRequestConfig {
@@ -73,7 +73,7 @@ export default abstract class PageListModule extends NetworkModule {
         this.updateState('pageInfo', { ...this.state.pageInfo, ...pageInfo });
     }
 
-    private updateList(list: {}[]): void {
+    private updateList(list: Array<{}>): void {
         this.updateState('list', list);
     }
 
@@ -83,6 +83,6 @@ export default abstract class PageListModule extends NetworkModule {
             throw new TypeError(`The api: ${api} is string type`);
         }
 
-        return <(config: AxiosRequestConfig) => Promise<{}>>api;
+        return api as ((config: AxiosRequestConfig) => Promise<{}>);
     }
 }

@@ -13,7 +13,9 @@ declare module 'vue/types/vue' {
         [key: string]: IConstant;
     }
 
+    /* tslint:disable:interface-name */
     interface Vue {
+    /* tslint:enable:interface-name */
         getConstants: (namespace: string) => IConstant;
         setConstants: (namespace: string, constants: IConstant) => void;
         $namespace?: string;
@@ -22,7 +24,9 @@ declare module 'vue/types/vue' {
 }
 
 declare module 'vue/types/options' {
+    /* tslint:disable:interface-name */
     interface ComponentOptions<V extends Vue> {
+    /* tslint:enable:interface-name */
         namespace?: string;
     }
 }

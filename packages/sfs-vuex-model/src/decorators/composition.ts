@@ -36,10 +36,10 @@ export function composition(Class: new () => BaseModule, fieldName?: string): Mi
                 store.registerModule(this.$namespace + pureFieldName, get(this, realFieldName));
                 setConstants(
                     get(this, [realFieldName, 'namespace']),
-                    get(this, [realFieldName, 'constants'])
+                    get(this, [realFieldName, 'constants']),
                 );
             }
         }
-        return <new () => T>Model;
+        return Model as (new () => T);
     };
 }
